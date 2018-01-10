@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.huangfugui.ibatis.mapper.UserMapper">
+
+    <!--
+      username字段有唯一索引
+      create unique index unique_constraint_username on t_user (username);
+    -->
+    <insert id="insertUser">
+      INSERT IGNORE INTO
+        t_user (username,password,user_type)
+      VALUES
+        (#{username},#{password},#{userType})
+    </insert>
+
+    <select id="selectByUsernameAndPassword" resultType="user">
+      select
+        id,
+        username,
+        password,
+        nickname,
+        sex,
+        head_image,
+        sign,
+        user_type
+      FROM
+        t_user
+      WHERE
+        username = #{username} AND password = #{password}
+    </select>
+
+    <update id="updateNicknameById">
+        UPDATE
+          t_user
+        SET
+          nickname = #{nickname}
+        WHERE
+          id = #{id}
+    </update>
+
+    <update id="updateSignById">
+        UPDATE
+          t_user
+        SET
+          sign = #{sign}
+        WHERE
+          id = #{id}
+    </update>
+
+</mapper>
